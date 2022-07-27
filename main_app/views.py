@@ -27,17 +27,19 @@ def about(request):
 # Flush Functions and Classes
 ##################################
 
+@login_required
 def flushes_index(request):
     flushes = Flush.objects.order_by('id')
     return render(request, 'flushes/index.html', {'flushes': flushes})
 
+@login_required
 def flushes_detail(request, flush_id):
 		# Get the individual "flush"
     flush = Flush.objects.get(id=flush_id)
     comment_form = CommentForm()
     return render(request, 'flushes/detail.html', {'flush': flush, 'comment_form': comment_form})
 
-class FlushCreate(CreateView):
+class FlushCreate(LoginRequiredMixin, CreateView):
     model = Flush
     fields = ['name', 'contact', 'address', 'opration_hours', 'description', 'gender_neutral', 'special_needs', 'baby_station', 'family_restroom', 'price']
     success_url = '/flushes/'
@@ -46,12 +48,12 @@ class FlushCreate(CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-class FlushUpdate(UpdateView):
+class FlushUpdate(LoginRequiredMixin, UpdateView):
     model = Flush
     # Let's disallow the renaming of a cat by excluding the name field!
     fields = '__all__'
 
-class FlushDelete(DeleteView):
+class FlushDelete(LoginRequiredMixin, DeleteView):
     model = Flush
     success_url = '/flushes/'
 
@@ -59,6 +61,7 @@ class FlushDelete(DeleteView):
 # Review Function
 ##################################
 
+@login_required
 def add_comment(request, flush_id):
 	# create the ModelForm using the data in request.POST
   form = CommentForm(request.POST)
@@ -75,6 +78,7 @@ def add_comment(request, flush_id):
 # Add Photo Function
 ##################################  
 
+@login_required
 def add_photo(request, flush_id):
     # photo-file will be the "name" attribute on the <input type="file">
     photo_file = request.FILES.get('photo-file', None)
