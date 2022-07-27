@@ -12,6 +12,6 @@ urlpatterns = [
     
     path('flushes/<int:flush_id>/add_comment/', views.add_comment, name='add_comment'),
     path('flushes/<int:flush_id>/add_photo/', views.add_photo, name='add_photo'),
-    
+    path('accounts/signup/', views.signup, name='signup'),
 ]
 
