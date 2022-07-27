@@ -20,9 +20,23 @@
     <a href="{% url 'flushes_update' flush.id %}">Edit</a>
     <a href="{% url 'flushes_delete' flush.id %}">Delete</a>
   </div>
-</div>
+</div><br><br>
 
+<div>
 <!-- Add Photos Section -->
+{% for photo in flush.photo_set.all %}
+<img class="responsive-img card-panel col s12 m4 l8" src="{{photo.url}}" alt="flush image">
+{% empty %}
+<div class="card-panel teal-text center-align">No Photos Uploaded</div>
+{% endfor %}
+<!-- Photo button/form -->
+<form action="{% url 'add_photo' flush.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+{% csrf_token %}
+<input type="file" name="photo-file">
+<br><br>
+<input type="submit" class="btn" value="Upload Photo">
+</form>
+</div>
 
 <!-- Comments Section -->
 
@@ -32,7 +46,7 @@
         {% csrf_token %}
         {{ comment_form.as_p }}
         <input type="submit" class="btn" value="Add Review">
-      </form>
+      </form><br><br>
 
     <table class="striped">
       <thead>
@@ -48,6 +62,6 @@
       </tbody>
     </table>
   </div>
-</div>
+</div><br><br>
 
 {% endblock %}
