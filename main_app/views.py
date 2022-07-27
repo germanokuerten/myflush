@@ -14,10 +14,10 @@ def flushes_index(request):
 
 # Faux Flush Data - Database simulation
 class Flush:
-    def __init__(self, name, author, description, price):
+    def __init__(self, name, contact, operation_hours, price):
         self.name = name
-        self.author = author
-        self.description = description
+        self.contact = contact
+        self.operation_hours = operation_hours
         self.price = price
 
 # Book objects that are being instantiated from the Book class.
