@@ -5,6 +5,8 @@ from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.views import redirect_to_login
 from django.contrib.auth.decorators import login_required
 from .models import Flush, Comment, Photo
 from .forms import CommentForm
@@ -39,6 +41,14 @@ def flushes_detail(request, flush_id):
     comment_form = CommentForm()
     return render(request, 'flushes/detail.html', {'flush': flush, 'comment_form': comment_form})
 
+class UserAccessMixin(PermissionRequiredMixin):
+    def dispatch(self, request, *args, **kwargs):
+        if (not self.request.user.is_authenticated):
+            return redirect_to_login(self.request.get_full_path(), self.get_login_url(), self.get_redirect_field_name())
+        if not self.has_permission():
+            return redirect('/flushes')
+        return super(UserAccessMixin, self).dispatch(request, *args, **kwargs)
+
 class FlushCreate(LoginRequiredMixin, CreateView):
     model = Flush
     fields = ['name', 'contact', 'address', 'opration_hours', 'description', 'gender_neutral', 'special_needs', 'baby_station', 'family_restroom', 'price']
@@ -48,12 +58,18 @@ class FlushCreate(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-class FlushUpdate(LoginRequiredMixin, UpdateView):
+class FlushUpdate(UserAccessMixin, UpdateView):
+
+    raise_exception = False
+    permission_required = 'flush.change_flushes'
+    login_url = '/flushes/'
+
     model = Flush
     # Let's disallow the renaming of a cat by excluding the name field!
     fields = '__all__'
 
-class FlushDelete(LoginRequiredMixin, DeleteView):
+class FlushDelete(UserAccessMixin, DeleteView):
+    permission_required = 'flush.change_flushes'
     model = Flush
     success_url = '/flushes/'
 
