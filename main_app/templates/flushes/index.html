@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Flush List</h1>
+<h3>Flush List</h3>
 
 {% for flush in flushes %}
   <div class="card">
     <a href="{% url 'detail' flush.id %}">
-    <div class="card-content">
+    <div class="card-content hoverable">
       <span class="card-title">{{ flush.name }}</span>
       <p>Author: {{ flush.author }}</p>
       <p>Description: {{ flush.description }}</p>

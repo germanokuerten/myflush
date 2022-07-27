@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Flush Details</h1>
+<h3>{{ flush.name }}</h3>
 
 <div class="card">
   <div class="card-content">
-    <span class="card-title">{{ flush.name }}</span>
+    <span class="card-title"></span>
     <p>Location: {{ flush.address }}</p>
     <p>Contact: {{ cat.contact }}</p>
     {% if flush.price > 0 %}

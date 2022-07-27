@@ -14,24 +14,31 @@
 
 <!-- Base Body -->
 <body>
+
+  <!-- Header -->
   <header class="navbar-fixed">
     <nav>
-      <div class="nav-wrapper">
+      <div class="nav-wrapper teal lighten-2">
         <ul>
           <li><a href="/" class="left brand-logo">&nbsp;&nbsp;MyFlush</a></li>
         </ul>
         <ul class="right">
-            <li><a href="/flushes">Flush near me</a></li>
+            <li><a href="{% url 'flushes_create' %}">Add a Flush</a></li>
+            <li><a href="/flushes">Flushes Near Me</a></li>
             <li><a href="/about">About</a></li>
         </ul>
       </div>
     </nav>
   </header>
+
+  <!-- Main -->
   <main class="container">
     {% block content %}
     {% endblock %}
   </main>
-  <footer class="page-footer">
+
+  <!-- Footer -->
+  <footer class="z-depth-2 page-footer teal lighten-2">
     <div class="right">All Rights Reserved, &copy; 2022 MyFlush &nbsp;</div>
   </footer>
 </body>

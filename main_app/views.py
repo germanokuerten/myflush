@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.generic.edit import CreateView
 from .models import Flush
+
 
 # Create your views here.
 
@@ -18,3 +20,7 @@ def flushes_detail(request, flush_id):
 		# Get the individual "flush"
     flush = Flush.objects.get(id=flush_id)
     return render(request, 'flushes/detail.html', {'flush': flush})
+
+class FlushCreate(CreateView):
+    model = Flush
+    fields = '__all__'
