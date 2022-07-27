@@ -14,6 +14,10 @@
       <p>Price: Free Flush</p>
     {% endif %}
   </div>
+  <div class="card-action">
+    <a href="{% url 'flushes_update' flush.id %}">Edit</a>
+    <a href="{% url 'flushes_delete' flush.id %}">Delete</a>
+  </div>
 </div>
 
 {% endblock %}

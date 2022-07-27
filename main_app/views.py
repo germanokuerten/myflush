@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Flush
 
 
@@ -24,3 +24,14 @@ def flushes_detail(request, flush_id):
 class FlushCreate(CreateView):
     model = Flush
     fields = '__all__'
+    success_url = '/flushes/'
+
+class FlushUpdate(UpdateView):
+    model = Flush
+    # Let's disallow the renaming of a cat by excluding the name field!
+    fields = '__all__'
+
+class FlushDelete(DeleteView):
+    model = Flush
+    success_url = '/flushes/'
+
