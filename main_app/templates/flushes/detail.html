@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<!-- Flush Info Section -->
+
 <h3>{{ flush.name }}</h3>
 
 <div class="card">
@@ -17,6 +19,34 @@
   <div class="card-action">
     <a href="{% url 'flushes_update' flush.id %}">Edit</a>
     <a href="{% url 'flushes_delete' flush.id %}">Delete</a>
+  </div>
+</div>
+
+<!-- Add Photos Section -->
+
+<!-- Comments Section -->
+
+<br><br>
+<div class="col s6">
+      <form action="{% url 'add_comment' flush.id %}" method="post">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <input type="submit" class="btn" value="Add Review">
+      </form>
+
+    <table class="striped">
+      <thead>
+        <tr><th>Title</th><th>Review</th></tr>
+      </thead>
+      <tbody>
+        {% for comment in flush.comment_set.all %}
+          <tr>
+            <td>{{comment.title}}</td>
+            <td>{{comment.content}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 </div>
 
