@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Flush List</h1>
+
+{% for flush in flushes %}
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">{{ flush.name }}</span>
+      <p>Author: {{ flush.author }}</p>
+      <p>Description: {{ flush.description }}</p>
+      {% if flush.price > 0 %}
+        <p>Age: {{ flush.price }}</p>
+      {% else %}
+        <p>Price: Free</p>
+      {% endif %}
+    </div>
+  </div>
+{% endfor %}
+
+{% endblock %}
