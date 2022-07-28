@@ -42,7 +42,7 @@
 
 <br><br>
 <div class="col s6">
-      <form action="{% url 'add_comment' flush.id %}" method="post">
+      <form action="{% url 'add_comment' flush.id user.id %}" method="post">
         {% csrf_token %}
         {{ comment_form.as_p }}
         <input type="submit" class="btn" value="Add Review">

@@ -10,7 +10,7 @@ urlpatterns = [
     path('flushes/<int:pk>/update/', views.FlushUpdate.as_view(), name='flushes_update'),
     path('flushes/<int:pk>/delete/', views.FlushDelete.as_view(), name='flushes_delete'),
     
-    path('flushes/<int:flush_id>/add_comment/', views.add_comment, name='add_comment'),
+    path('flushes/<int:flush_id>/<int:user_id>/add_comment/', views.add_comment, name='add_comment'),
     path('flushes/<int:flush_id>/add_photo/', views.add_photo, name='add_photo'),
     path('accounts/signup/', views.signup, name='signup'),
 ]

@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.views import redirect_to_login
 from django.contrib.auth.decorators import login_required
-from .models import Flush, Comment, Photo
+from .models import Flush, Photo
 from .forms import CommentForm
 import uuid 
 import boto3
@@ -78,23 +78,21 @@ class FlushDelete(UserAccessMixin, DeleteView):
 ##################################
 
 @login_required
-def add_comment(request, flush_id):
+def add_comment(request, flush_id, user_id):
 	# create the ModelForm using the data in request.POST
   form = CommentForm(request.POST)
-  # validate the form
-  if form.is_valid():
-    # don't save the form to the db until it
-    # has the cat_id assigned
-    new_comment = form.save(commit=False)
-    new_comment.flush_id = flush_id
-    new_comment.save()
+  print(form)
+  
+  new_comment = form.save(commit=False)
+  new_comment.flush_id = flush_id
+  new_comment.user_id = user_id
+  new_comment.save()
   return redirect('detail', flush_id=flush_id)
 
 ##################################
 # Add Photo Function
 ##################################  
 
-@login_required
 def add_photo(request, flush_id):
     # photo-file will be the "name" attribute on the <input type="file">
     photo_file = request.FILES.get('photo-file', None)
