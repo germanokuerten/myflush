@@ -1,7 +1,6 @@
 # [MyFlush](https://myflush.herokuapp.com//)
 
-:-------------------------:|
-![](./MyFlush.png)  |
+![](./MyFlush.png)  
 
 Find the nearest public Bathroom.
 
